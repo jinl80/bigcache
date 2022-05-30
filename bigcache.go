@@ -123,6 +123,12 @@ func (c *BigCache) Get(key string) ([]byte, error) {
 	return shard.get(key, hashedKey)
 }
 
+func (c *BigCache) Has(key string) bool {
+	hashedKey := c.hash.Sum64(key)
+	shard := c.getShard(hashedKey)
+	return shard.has(key, hashedKey)
+}
+
 // GetWithInfo reads entry for the key with Response info.
 // It returns an ErrEntryNotFound when
 // no entry exists for the given key.
